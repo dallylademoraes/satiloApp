@@ -1,0 +1,31 @@
+/* src/app/app.component.scss */
+
+ion-menu ion-content {
+  --background: var(--ion-background-color, #fff); /* Cor de fundo padrão do menu */
+}
+
+ion-menu ion-toolbar {
+  --background: var(--ion-color-primary, #3880ff); /* Cor de fundo do cabeçalho do menu */
+  color: var(--ion-color-primary-contrast, #fff);
+}
+
+ion-menu ion-list {
+  padding: 0; /* Remover padding padrão da lista */
+}
+
+ion-menu ion-item {
+  // Força os itens a serem visíveis e terem um tamanho mínimo
+  --min-height: 48px; /* Altura mínima para cada item */
+  display: flex !important; /* Garante que é um flex container */
+  align-items: center; /* Centraliza verticalmente o conteúdo */
+  opacity: 1 !important; /* Garante que a opacidade não está zero */
+  visibility: visible !important; /* Garante que não está hidden */
+  // Corrigir possíveis problemas de cor do texto
+  --color: var(--ion-color-dark, #000); /* Cor do texto padrão para itens do menu */
+}
+
+ion-menu ion-item ion-label {
+  // Garante que o texto dentro do label seja visível
+  color: var(--ion-color-dark, #000) !important; /* Cor do texto */
+  font-size: 1rem; /* Tamanho de fonte padrão */
+}

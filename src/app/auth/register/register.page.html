@@ -1,0 +1,45 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/login"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Registrar</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <form [formGroup]="registerForm" (ngSubmit)="register()">
+    <ion-list lines="full" class="ion-no-margin">
+      <ion-item>
+        <ion-input label="Usuário" labelPlacement="floating" formControlName="username" type="text" placeholder="Escolha um nome de usuário"></ion-input>
+      </ion-item>
+      <div *ngIf="registerForm.get('username')?.invalid && registerForm.get('username')?.touched" class="validation-error">
+        <span *ngIf="registerForm.get('username')?.errors?.['required']">Nome de usuário é obrigatório.</span>
+        <span *ngIf="registerForm.get('username')?.errors?.['minlength']">Mínimo de 4 caracteres para o usuário.</span>
+      </div>
+
+      <ion-item>
+        <ion-input label="Senha" labelPlacement="floating" formControlName="password" type="password" placeholder="Crie uma senha"></ion-input>
+      </ion-item>
+      <div *ngIf="registerForm.get('password')?.invalid && registerForm.get('password')?.touched" class="validation-error">
+        <span *ngIf="registerForm.get('password')?.errors?.['required']">Senha é obrigatória.</span>
+        <span *ngIf="registerForm.get('password')?.errors?.['minlength']">Senha deve ter no mínimo 6 caracteres.</span>
+      </div>
+
+      <ion-item>
+        <ion-input label="Confirmar Senha" labelPlacement="floating" formControlName="password2" type="password" placeholder="Confirme sua senha"></ion-input>
+      </ion-item>
+      <div *ngIf="registerForm.get('password2')?.invalid && registerForm.get('password2')?.touched" class="validation-error">
+        Confirmar senha é obrigatório.
+      </div>
+      <div *ngIf="registerForm.get('password')?.value !== registerForm.get('password2')?.value && registerForm.get('password2')?.touched" class="validation-error">
+        As senhas não conferem.
+      </div>
+    </ion-list>
+
+    <ion-button expand="block" type="submit" [disabled]="registerForm.invalid || registerForm.get('password')?.value !== registerForm.get('password2')?.value" class="ion-margin-top">Registrar</ion-button>
+    <ion-button expand="block" fill="clear" (click)="goToLogin()" class="ion-margin-top">
+      Já tem uma conta? Faça login!
+    </ion-button>
+  </form>
+</ion-content>

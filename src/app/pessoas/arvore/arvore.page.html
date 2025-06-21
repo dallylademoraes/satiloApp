@@ -1,0 +1,82 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/pessoas/lista-pessoas"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Árvore Genealógica</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <div *ngIf="isLoading" class="ion-text-center ion-padding">
+    <ion-spinner name="crescent"></ion-spinner>
+    <p>Carregando árvore...</p>
+  </div>
+
+  <div *ngIf="errorMessage && !isLoading" class="ion-padding ion-text-center">
+    <ion-card color="danger">
+      <ion-card-content>
+        <p>{{ errorMessage }}</p>
+        <ion-button expand="block" (click)="goBackToList()">Voltar para a Lista</ion-button>
+        <ion-button expand="block" fill="clear" (click)="goToCreatePerson()">Adicionar Pessoa</ion-button>
+      </ion-card-content>
+    </ion-card>
+  </div>
+
+  <div *ngIf="!isLoading && !errorMessage">
+    <ion-card *ngIf="regioesFamiliares.length > 0" class="ion-margin-bottom">
+      <ion-card-header>
+        <ion-card-title class="ion-text-center">Origens Regionais da Família</ion-card-title>
+      </ion-card-header>
+      <ion-card-content class="ion-text-center">
+        <ion-chip *ngFor="let item of regioesFamiliares" color="primary">
+          <ion-label>{{ item.regiao }}: {{ item.count }} parentes</ion-label>
+        </ion-chip>
+      </ion-card-content>
+    </ion-card>
+
+    <div class="tree-container">
+      <div *ngFor="let levelData of treeLevels" class="tree-level" [id]="'tree-level-' + levelData.level">
+        <div *ngFor="let group of levelData.grouped_nodes" class="person-group" [ngClass]="group.group_type">
+          <div *ngFor="let personData of group.nodes" class="person-card"
+               [ngClass]="{
+                 'is-root-node': personData.is_root_display_node,
+                 'is-user-selected-card': personData.is_user_selected,
+                 'has-children': hasChildren(personData)
+               }"
+               [id]="'person-' + personData.id">
+
+            <div class="card-body d-flex flex-column align-items-center p-2">
+                <img [src]="personData.foto_url || 'assets/img/sem-foto.jpg'" alt="{{ personData.nome }}" class="img-fluid rounded-circle mb-1" style="width: 70px; height: 70px; object-fit: cover; border: 3px solid #ddd;">
+
+                <h5 class="card-title name ion-text-center mb-0" style="font-size: 0.95em; line-height: 1.2; word-break: break-word;">
+                    {{ personData.nome }}
+                    <ion-badge *ngIf="personData.is_user_selected" color="success">Você</ion-badge>
+                </h5>
+
+                <div class="details ion-text-center ion-text-muted w-100" style="font-size: 0.75em; line-height: 1.3; margin-top: 0.25rem;">
+                    <small class="ion-d-block">Idade: {{ personData.idade || 'N/A' }}</small>
+                    <small class="ion-d-block">Gênero: {{ personData.genero }}</small>
+                    <small class="ion-d-block">Parentesco: <strong>{{ personData.relacao || 'N/A' }}</strong></small>
+                    <small class="ion-d-block">Status: {{ personData.status_vida || 'N/A' }}</small>
+                    <small *ngIf="personData.local_nascimento" class="ion-d-block">Local Nasc.: {{ personData.local_nascimento }}</small>
+                </div>
+
+                <div class="ion-d-flex ion-justify-content-center ion-align-items-center ion-gap-1 ion-margin-top ion-w-100">
+                    <ion-button size="small" fill="clear" color="primary" (click)="goToPersonDetails(personData.id)" title="Ver detalhes do membro">
+                      Detalhes
+                    </ion-button>
+                    </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="ion-text-center ion-margin-top">
+    <ion-button (click)="goBackToList()">Voltar para a lista</ion-button>
+  </div>
+
+</ion-content>

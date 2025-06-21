@@ -1,0 +1,100 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>{{ person.nome }}</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="closeModal()">Fechar</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <div class="ion-text-center ion-margin-bottom">
+    <img [src]="person.foto_url || 'assets/img/sem-foto.jpg'" alt="{{ person.nome }}"
+         class="img-fluid rounded-circle" style="max-height: 200px; width: 150px; height: 150px; object-fit: cover; border: 4px solid var(--ion-color-light);">
+  </div>
+
+  <ion-list lines="none">
+    <ion-item>
+      <ion-label>
+        <h2>Nome:</h2>
+        <p>{{ person.nome }}</p>
+      </ion-label>
+    </ion-item>
+
+    <ion-item *ngIf="person.data_nascimento">
+      <ion-label>
+        <h2>Data de Nascimento:</h2>
+        <p>{{ person.data_nascimento | date:'dd/MM/yyyy' }}</p>
+      </ion-label>
+    </ion-item>
+    <ion-item *ngIf="person.idade !== 'N/A'">
+      <ion-label>
+        <h2>Idade:</h2>
+        <p>{{ person.idade }}</p>
+      </ion-label>
+    </ion-item>
+
+    <ion-item *ngIf="person.data_falecimento || person.data_falecimento_incerta">
+      <ion-label>
+        <h2>Data de Falecimento:</h2>
+        <p *ngIf="person.data_falecimento">{{ person.data_falecimento | date:'dd/MM/yyyy' }}</p>
+        <p *ngIf="person.data_falecimento_incerta">(Data Incerta)</p>
+        <p *ngIf="!person.data_falecimento && !person.data_falecimento_incerta">Não informado</p>
+      </ion-label>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>
+        <h2>Gênero:</h2>
+        <p>{{ person.genero }}</p>
+      </ion-label>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>
+        <h2>Pai:</h2>
+        <p>{{ getRelationName(person.pai) }}</p>
+      </ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-label>
+        <h2>Mãe:</h2>
+        <p>{{ getRelationName(person.mae) }}</p>
+      </ion-label>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>
+        <h2>Parentesco em relação a você:</h2>
+        <p>{{ person.relacao || 'Desconhecido' }}</p>
+      </ion-label>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>
+        <h2>Status de Vida:</h2>
+        <p>{{ person.status_vida }}</p>
+      </ion-label>
+    </ion-item>
+
+    <ion-item *ngIf="person.local_nascimento">
+      <ion-label>
+        <h2>Local de Nascimento:</h2>
+        <p>{{ person.local_nascimento }}</p>
+      </ion-label>
+    </ion-item>
+    <ion-item *ngIf="person.estado_nascimento">
+      <ion-label>
+        <h2>Estado de Nascimento:</h2>
+        <p>{{ person.estado_nascimento }}</p>
+      </ion-label>
+    </ion-item>
+
+    <ion-item *ngIf="person.historia_pessoal">
+      <ion-label>
+        <h2>História Pessoal:</h2>
+        <p>{{ person.historia_pessoal }}</p>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+</ion-content>

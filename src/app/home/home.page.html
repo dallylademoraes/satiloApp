@@ -1,0 +1,44 @@
+<ion-header>
+  <ion-toolbar color="dark">
+    <ion-title>Satilo</ion-title>
+    <ion-buttons slot="end">
+      <div class="desktop-menu ion-hide-md-down">
+        <ion-button routerLink="/pessoas/lista-pessoas">Ver Minha Linhagem</ion-button>
+        <ion-button routerLink="/pessoas/criar-pessoa">Adicionar Pessoa</ion-button>
+        <ion-button (click)="goToTreeView()">Ver Árvore</ion-button>
+        <ion-button *ngIf="authService.isAuthenticated$() | async">Olá, {{ authService.currentUsername }}!</ion-button>
+        <ion-button *ngIf="authService.isAuthenticated$() | async" (click)="logout()">Sair</ion-button>
+        <ion-button *ngIf="!(authService.isAuthenticated$() | async)" routerLink="/login">Entrar</ion-button>
+        <ion-button *ngIf="!(authService.isAuthenticated$() | async)" routerLink="/register">Cadastrar</ion-button>
+      </div>
+      <ion-menu-button class="ion-hide-md-up"></ion-menu-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-no-padding">
+  <div class="hero-banner">
+    <div class="hero-banner-content">
+      <h1>Bem-vindo ao Satilo!</h1>
+      <p>Aqui você pode criar e explorar sua própria árvore genealógica de forma simples e intuitiva.</p>
+      <ion-button (click)="startMyLineage()" size="large" color="primary">
+        Começar Minha Linhagem
+      </ion-button>
+    </div>
+  </div>
+
+  <div class="section-why-create ion-padding">
+    <h2>Por que criar sua árvore genealógica?</h2>
+    <p>Conecte-se com suas raízes, descubra histórias e preserve o legado da sua família para as futuras gerações.</p>
+  </div>
+
+  <div class="section-in-memory ion-padding ion-text-center">
+    <ion-card>
+      <ion-card-content>
+        <p class="in-memory-phrase">
+          Em memória do meu querido avô, Alfredo Satilo Rodrigues de Moraes.
+        </p>
+      </ion-card-content>
+    </ion-card>
+  </div>
+</ion-content>

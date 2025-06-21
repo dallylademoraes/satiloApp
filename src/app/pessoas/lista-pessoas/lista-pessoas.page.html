@@ -1,0 +1,81 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>Minhas Pessoas</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="logout()">
+        Sair
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <ion-refresher slot="fixed" (ionRefresh)="loadPessoas($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <div class="ion-padding-vertical">
+    <ion-button expand="block" (click)="goToCreatePerson()" class="ion-margin-bottom">
+      Adicionar Nova Pessoa
+    </ion-button>
+    <ion-button expand="block" color="secondary" (click)="viewMyTree()">
+      Ver Minha Árvore
+    </ion-button>
+  </div>
+
+
+  <ion-list *ngIf="pessoas.length > 0; else noPessoas">
+    <ion-item *ngFor="let pessoa of pessoas">
+      <ion-grid>
+        <ion-row class="ion-align-items-center">
+          <ion-col size="8"> <div class="person-info" (click)="viewPersonDetails(pessoa.id)">
+              <ion-avatar slot="start">
+                <img [src]="pessoa.foto_url || 'assets/img/sem-foto.jpg'" alt="Foto da Pessoa">
+              </ion-avatar>
+              <ion-label>
+                <h2>{{ pessoa.nome }}</h2>
+                <p>
+                  Gênero: {{ pessoa.genero === 'M' ? 'Masculino' : (pessoa.genero === 'F' ? 'Feminino' : 'Outro') }}
+                </p>
+                <p *ngIf="pessoa.idade !== 'N/A'">Idade: {{ pessoa.idade }} {{ pessoa.status_vida === 'Vivo(a)' ? 'anos' : '' }}</p>
+                <p>Status: {{ pessoa.status_vida }}</p>
+              </ion-label>
+            </div>
+          </ion-col>
+
+          <ion-col size="4" class="ion-text-right">
+            <ion-button 
+              size="small" 
+              color="tertiary" 
+              (click)="setAsCurrentUser(pessoa.id, pessoa.nome)"
+              class="ion-margin-bottom"
+              [disabled]="pessoa.id === authService.currentUserId"
+            >
+              Definir como Eu
+            </ion-button>
+            <br>
+            <ion-button size="small" color="warning" (click)="viewPersonDetails(pessoa.id)" class="ion-margin-bottom">
+              Editar
+            </ion-button>
+            <br>
+            <ion-button size="small" color="danger" (click)="deletePerson(pessoa.id, pessoa.nome)">
+              Excluir
+            </ion-button>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-item>
+  </ion-list>
+
+  <ng-template #noPessoas>
+    <ion-card *ngIf="!isLoading">
+      <ion-card-header>
+        <ion-card-title>Nenhuma pessoa cadastrada</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        Comece adicionando a primeira pessoa à sua árvore genealógica!
+      </ion-card-content>
+    </ion-card>
+  </ng-template>
+
+</ion-content>

@@ -1,0 +1,17 @@
+/* src/app/pessoas/person-details-modal/person-details-modal.component.scss */
+
+/* Adicione estilos específicos para o seu modal aqui */
+ion-header {
+  ion-toolbar {
+      --background: var(--ion-color-primary); // Exemplo de estilo
+      color: white;
+  }
+}
+
+ion-content {
+  --background: var(--ion-color-light); // Fundo claro para o modal
+}
+
+img {
+  border: 2px solid var(--ion-color-medium);
+}

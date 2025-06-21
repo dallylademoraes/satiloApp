@@ -1,0 +1,46 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>Login</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <form [formGroup]="loginForm" (ngSubmit)="login()">
+    <ion-list lines="full" class="ion-no-margin">
+      <ion-item>
+        <ion-input
+          label="Usuário"
+          labelPlacement="floating"
+          formControlName="username"
+          type="text"
+          placeholder="Seu nome de usuário">
+        </ion-input>
+      </ion-item>
+      <div *ngIf="loginForm.get('username')?.invalid && loginForm.get('username')?.touched" class="validation-error">
+        Nome de usuário é obrigatório.
+      </div>
+
+      <ion-item>
+        <ion-input
+          label="Senha"
+          labelPlacement="floating"
+          formControlName="password"
+          type="password"
+          placeholder="Sua senha">
+        </ion-input>
+      </ion-item>
+      <div *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched" class="validation-error">
+        <span *ngIf="loginForm.get('password')?.errors?.['required']">Senha é obrigatória.</span>
+        <span *ngIf="loginForm.get('password')?.errors?.['minlength']">Senha deve ter no mínimo 6 caracteres.</span>
+      </div>
+    </ion-list>
+
+    <ion-button expand="block" type="submit" [disabled]="loginForm.invalid" class="ion-margin-top">
+      Entrar
+    </ion-button>
+
+    <ion-button expand="block" fill="clear" (click)="goToRegister()" class="ion-margin-top">
+      Não tem uma conta? Registre-se!
+    </ion-button>
+  </form>
+</ion-content>

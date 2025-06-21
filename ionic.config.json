@@ -1,0 +1,7 @@
+{
+  "name": "SatiloApp",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular-standalone"
+}

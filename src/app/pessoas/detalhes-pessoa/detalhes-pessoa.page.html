@@ -1,0 +1,85 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/pessoas/lista-pessoas"></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{ isEditMode ? 'Editar Pessoa' : 'Nova Pessoa' }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <form [formGroup]="personForm" (ngSubmit)="onSubmit()">
+    <ion-list lines="full">
+
+      <ion-item>
+        <ion-input label="Nome" labelPlacement="floating" formControlName="nome" type="text"></ion-input>
+      </ion-item>
+      <div *ngIf="personForm.get('nome')?.invalid && personForm.get('nome')?.touched" class="validation-error">
+        Nome é obrigatório.
+      </div>
+
+      <ion-item>
+        <ion-input label="Data de Nascimento" labelPlacement="floating" type="date" formControlName="data_nascimento"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-input label="Data de Falecimento" labelPlacement="floating" type="date" formControlName="data_falecimento"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-select label="Gênero" labelPlacement="floating" formControlName="genero" placeholder="Selecione o gênero">
+          <ion-select-option value="M">Masculino</ion-select-option>
+          <ion-select-option value="F">Feminino</ion-select-option>
+          <ion-select-option value="O">Outro</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <div *ngIf="personForm.get('genero')?.invalid && personForm.get('genero')?.touched" class="validation-error">
+        Gênero é obrigatório.
+      </div>
+
+      <ion-item>
+        <ion-select label="Status de Vida" labelPlacement="floating" formControlName="status_vida" placeholder="Selecione o status">
+          <ion-select-option value="Vivo(a)">Vivo(a)</ion-select-option>
+          <ion-select-option value="Falecido(a)">Falecido(a)</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <div *ngIf="personForm.get('status_vida')?.invalid && personForm.get('status_vida')?.touched" class="validation-error">
+        Status de vida é obrigatório.
+      </div>
+
+      <ion-item>
+        <ion-select label="Pai" labelPlacement="floating" formControlName="pai" placeholder="Selecione o pai">
+          <ion-select-option [value]="null">Nenhum</ion-select-option>
+          <ion-select-option *ngFor="let p of todasPessoas | filterByGender:'M'" [value]="p.id">{{ p.nome }}</ion-select-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item>
+        <ion-select label="Mãe" labelPlacement="floating" formControlName="mae" placeholder="Selecione a mãe">
+          <ion-select-option [value]="null">Nenhum</ion-select-option>
+          <ion-select-option *ngFor="let p of todasPessoas | filterByGender:'F'" [value]="p.id">{{ p.nome }}</ion-select-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item>
+        <ion-textarea label="Histórico Pessoal" labelPlacement="floating" formControlName="historia_pessoal" rows="3"></ion-textarea>
+        </ion-item>
+
+      <ion-item class="ion-margin-top">
+        <ion-label>Foto</ion-label>
+        <input type="file" (change)="onFileSelected($event)" accept="image/*">
+      </ion-item>
+      <ion-text *ngIf="selectedPhoto">
+        <p>Arquivo selecionado: {{ selectedPhoto.name }}</p>
+      </ion-text>
+      </ion-list>
+
+    <ion-button expand="block" type="submit" class="ion-margin-top" [disabled]="personForm.invalid">
+      {{ isEditMode ? 'Salvar Alterações' : 'Criar Pessoa' }}
+    </ion-button>
+    <ion-button expand="block" color="light" (click)="goBack()" class="ion-margin-top">
+      Cancelar
+    </ion-button>
+
+  </form>
+</ion-content>

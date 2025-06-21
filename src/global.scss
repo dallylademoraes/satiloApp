@@ -1,0 +1,10 @@
+/* src/global.scss (VERSÃO FINAL E CORRIGIDA) */
+
+// @use rules devem ser as PRIMEIRAS regras no arquivo!
+@use "./theme/variables.scss" as *; // <-- SEU ARQUIVO DE TEMA (Onde as variáveis de cor são definidas)
+
+// No final de src/global.scss, adicione:
+body {
+  --ion-background-color: var(--ion-color-light, #ffffff);
+  --ion-text-color: var(--ion-color-dark, #000000);
+}
