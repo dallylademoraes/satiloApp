@@ -1,7 +1,4 @@
-# satiloApp
-Claro! Aqui está uma descrição do Satilo App para o README do GitHub, focada nos principais recursos e no propósito da aplicação:
-
-Satilo App
+## Satilo App
 O Satilo App é uma aplicação intuitiva e amigável para a criação e exploração de árvores genealógicas. Desenvolvido com Ionic e Angular, ele oferece uma experiência fluida para que os usuários possam registrar seus familiares, visualizar suas conexões de linhagem e preservar a história de sua família de forma digital.
 
 🌟 Recursos Principais
